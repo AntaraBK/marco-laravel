@@ -113,9 +113,9 @@ class UserController extends Controller
     {
         if ($user) {
             $user->delete();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'message' => 'User deleted successfully!']);
         }
-        return response()->json(['success' => false]);
+        return response()->json(['success' => false, 'message' => 'Something wrong!']);
     }
 
     private function generatePassword($username, $mobile)

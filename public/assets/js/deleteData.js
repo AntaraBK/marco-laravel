@@ -31,7 +31,7 @@ $(document).on('click', '.delete-record', function() {
                       Swal.fire({
                           icon: 'success',
                           title: 'Deleted!',
-                          text: 'Your file has been deleted.',
+                          text: response.message,
                           customClass: {
                               confirmButton: 'btn btn-success waves-effect waves-light'
                           }

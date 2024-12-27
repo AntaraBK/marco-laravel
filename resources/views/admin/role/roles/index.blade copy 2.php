@@ -34,8 +34,8 @@
                     <!-- Add role form -->
                     <form id="addRoleForm" class="row g-6">
                         <div class="col-12">
-                            <label class="form-label" for="name">Role Name</label>
-                            <input type="text" id="name" name="name" class="form-control"
+                            <label class="form-label" for="modalRoleName">Role Name</label>
+                            <input type="text" id="modalRoleName" name="modalRoleName" class="form-control"
                                 placeholder="Enter a role name" tabindex="-1" />
                         </div>
                         <div class="col-12">
@@ -52,7 +52,7 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-end">
-                                                    <div class="form-check mb-0 me-4 me-lg-12">
+                                                    <div class="form-check mb-0">
                                                         <input class="form-check-input" type="checkbox" id="selectAll" />
                                                         <label class="form-check-label" for="selectAll"> Select All
                                                         </label>
@@ -74,32 +74,34 @@
                                             $groupedPermissions[$group][] = $action;
                                         }
                                         ?>
-                                        @foreach ($groupedPermissions as $group => $actions)
-                                            <tr>
-                                                <td class="text-nowrap fw-medium text-heading">
-                                                    {{ ucfirst($group) }}
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-end">
-                                                        @foreach (['read', 'write', 'create', 'delete', 'index'] as $action)
-                                                            @if (in_array($action, $actions))
-                                                                <div class="form-check mb-0 me-4 me-lg-12">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="{{ $group . ucfirst($action) }}"
-                                                                        name="permissions[]"
-                                                                        value="{{ $group . '.' . $action }}"
-                                                                        @if (isset($rolePermissions) && in_array($group . '.' . $action, $rolePermissions)) checked @endif />
-                                                                    <label class="form-check-label"
-                                                                        for="{{ $group . ucfirst($action) }}">
-                                                                        {{ ucfirst($action) }}
-                                                                    </label>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                         @foreach ($groupedPermissions as $group => $actions)
+                                         <tr>
+                                             <td class="text-nowrap fw-medium text-heading">
+                                                 {{ ucfirst($group) }}
+                                             </td>
+                                             <td>
+                                                 <div class="d-flex justify-content-end">
+                                                     @foreach(['read', 'write', 'create', 'delete','index'] as $action)
+                                                         @if(in_array($action, $actions))
+                                                         <div class="form-check mb-0 me-4 me-lg-12">
+                                                             <input 
+                                                                 class="form-check-input" 
+                                                                 type="checkbox" 
+                                                                 id="{{ $group . ucfirst($action) }}"
+                                                                 name="permissions[]"
+                                                                 value="{{ $group . '.' . $action }}"
+                                                                 @if(isset($rolePermissions) && in_array($group . '.' . $action, $rolePermissions)) checked @endif
+                                                             />
+                                                             <label class="form-check-label" for="{{ $group . ucfirst($action) }}">
+                                                                 {{ ucfirst($action) }}
+                                                             </label>
+                                                         </div>
+                                                         @endif
+                                                     @endforeach
+                                                 </div>
+                                             </td>
+                                         </tr>
+                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -119,11 +121,9 @@
         </div>
     </div>
     <!--/ Add Role Modal -->
-    @include('admin.role.roles.roleModule')
 @endsection
 @section('script')
     <script src="{{ asset('assets/js/modal-add-role.js') }}"></script>
-    <script src="{{ asset('assets/js/modal-edit-role.js') }}"></script>
     <script>
         var dt_ajax_table = $('.datatables-roles');
         var table = dt_ajax_table.DataTable({
